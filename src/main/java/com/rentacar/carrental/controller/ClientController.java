@@ -25,10 +25,8 @@ public class ClientController {
     }
 
     @PostMapping("/new")
-    public Client addNewClient(@RequestBody @DateTimeFormat(pattern = "dd/MM/yyyy") Client client){
-        Client savedClient = clientService.save(client);
-        savedClient.setDateOfBirth(savedClient.getDateOfBirth());
-        return savedClient;
+    public Client addNewClient(@RequestBody Client client){
+        return clientService.save(client);
     }
 
     @GetMapping("/show/all")
