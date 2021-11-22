@@ -1,5 +1,6 @@
 package com.rentacar.carrental.model;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,6 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -20,5 +23,5 @@ public class Person extends BaseEntity{
     private String lastName;
 
     @Column(name="date_of_birth")
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
 }

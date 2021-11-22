@@ -3,8 +3,6 @@ package com.rentacar.carrental.services;
 import com.rentacar.carrental.model.Car;
 import com.rentacar.carrental.model.Client;
 import com.rentacar.carrental.model.Rental;
-import com.rentacar.carrental.repositories.CarRepository;
-import com.rentacar.carrental.repositories.ClientRepository;
 import com.rentacar.carrental.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,25 +16,23 @@ public class RentalService {
     RentalRepository rentalRepository;
 
     @Autowired
-    CarRepository carRepository;
+    CarService carService;
 
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
 
     public Rental save(Rental rental){
         Long carId = rental.getRentedCarId();
         Long clientId = rental.getRenterClientId();
-        Optional<Car> car = carRepository.findById(carId);
-        Optional<Client> client = clientRepository.findById(clientId);
-        if(car.isPresent() && client.isPresent()) {
-            car.get().setRenterClientId(clientId);
-            client.get().setRentedCarId(carId);
-            car.get().setRented(true);
-            carRepository.save(car.get());
-            clientRepository.save(client.get());
+        Car car = carService.findByCarId(carId);
+        Client client = clientService.findByClientId(clientId);
+            car.setRenterClientId(clientId);
+            client.setRentedCarId(carId);
+            car.setRented(true);
+            carService.saveCar(car);
+            clientService.saveClient(client);
             return rentalRepository.save(rental);
-        }
-        throw new NullPointerException();
+
     }
 
     public Optional<Rental> findById(Long id) {
@@ -44,19 +40,15 @@ public class RentalService {
     }
 
     public void deleteById(Long id) {
-        Optional<Rental> rental = rentalRepository.findById(id);
-        if(rental.isPresent()){
-            Long carId = rental.get().getRentedCarId();
-            Long clientId = rental.get().getRenterClientId();
-            Optional<Car> car = carRepository.findById(carId);
-            Optional<Client> client = clientRepository.findById(clientId);
-            if(car.isPresent() && client.isPresent()){
-                car.get().setRenterClientId(null);
-                client.get().setRentedCarId(null);
-                car.get().setRented(false);
-                rentalRepository.deleteById(id);
-            }
-        }
+        Rental rental = rentalRepository.findById(id).stream().findFirst().orElse(null);
+        Long carId = rental.getRentedCarId();
+        Long clientId = rental.getRenterClientId();
+        Car car = carService.findByCarId(carId);
+        Client client = clientService.findByClientId(clientId);
+        car.setRenterClientId(null);
+        client.setRentedCarId(null);
+        car.setRented(false);
+        rentalRepository.deleteById(id);
     }
 
     public Iterable<Rental> findAll() {

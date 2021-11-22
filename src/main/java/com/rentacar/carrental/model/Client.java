@@ -16,7 +16,6 @@ import java.util.Set;
 @Entity
 @Table(name= "clients")
 public class Client extends Person{
-
     @NotBlank
     @Column(name = "licence_number")
     @Size(min=6,max=6)
