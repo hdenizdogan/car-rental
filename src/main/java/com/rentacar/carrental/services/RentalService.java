@@ -7,8 +7,6 @@ import com.rentacar.carrental.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class RentalService {
 
@@ -35,12 +33,12 @@ public class RentalService {
 
     }
 
-    public Optional<Rental> findById(Long id) {
-        return rentalRepository.findById(id);
+    public Rental findByRentalId(Long rentalId) {
+        return rentalRepository.findById(rentalId).stream().findFirst().orElse(null);
     }
 
-    public void deleteById(Long id) {
-        Rental rental = rentalRepository.findById(id).stream().findFirst().orElse(null);
+    public void deleteByRentalId(Long rentalId) {
+        Rental rental = rentalRepository.findById(rentalId).stream().findFirst().orElse(null);
         Long carId = rental.getRentedCarId();
         Long clientId = rental.getRenterClientId();
         Car car = carService.findByCarId(carId);
@@ -48,7 +46,7 @@ public class RentalService {
         car.setRenterClientId(null);
         client.setRentedCarId(null);
         car.setRented(false);
-        rentalRepository.deleteById(id);
+        rentalRepository.deleteById(rentalId);
     }
 
     public Iterable<Rental> findAll() {

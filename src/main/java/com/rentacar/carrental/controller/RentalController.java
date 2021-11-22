@@ -1,15 +1,10 @@
 package com.rentacar.carrental.controller;
 
 
-import com.rentacar.carrental.model.Car;
-import com.rentacar.carrental.model.Client;
 import com.rentacar.carrental.model.Rental;
-import com.rentacar.carrental.services.CarService;
-import com.rentacar.carrental.services.ClientService;
 import com.rentacar.carrental.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/rental")
@@ -31,8 +26,8 @@ public class RentalController {
 
     @GetMapping("/delivering/{id}")
     public String deliverACar(@PathVariable("id")Long rentalId){
-        Optional<Rental> rental = rentalService.findById(rentalId);
-        rentalService.deleteById(rentalId);
+        Rental rental = rentalService.findByRentalId(rentalId);
+        rentalService.deleteByRentalId(rentalId);
         return "Deleted "+rentalId;
     }
 }

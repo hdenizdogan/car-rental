@@ -2,15 +2,9 @@ package com.rentacar.carrental.services;
 
 import com.rentacar.carrental.model.Client;
 import com.rentacar.carrental.repositories.ClientRepository;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -18,8 +12,6 @@ public class ClientService{
 
     @Autowired
     ClientRepository clientRepository;
-
-
 
 
     public Client saveClient(Client client) {
@@ -42,8 +34,8 @@ public class ClientService{
     }
 
 
-    public List<Client> findAllByClientId(List<Long> longs) {
-        return (List<Client>) clientRepository.findAllById(longs);
+    public List<Client> findAllByClientId(List<Long> clientIds) {
+        return (List<Client>) clientRepository.findAllById(clientIds);
     }
 
 
