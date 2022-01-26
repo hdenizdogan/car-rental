@@ -37,7 +37,7 @@ public class RentalService {
         return rentalRepository.findById(rentalId).stream().findFirst().orElse(null);
     }
 
-    public void deleteByRentalId(Long rentalId) {
+    public void deleteByRentalId(Long rentalId){
         Rental rental = rentalRepository.findById(rentalId).stream().findFirst().orElse(null);
         Long carId = rental.getRentedCarId();
         Long clientId = rental.getRenterClientId();

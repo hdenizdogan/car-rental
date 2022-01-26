@@ -1,13 +1,15 @@
 package com.rentacar.carrental.model;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -17,9 +19,9 @@ import java.util.Set;
 @Table(name= "clients")
 public class Client extends Person{
     @NotBlank
-    @Column(name = "licence_number")
+    @Column(name = "licence_number",unique = true)
     @Size(min=6,max=6)
-    private String licenceNumber;
+    private Long licenceNumber;
 
     @Column(name = "rented_car_id")
     private Long rentedCarId;
