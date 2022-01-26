@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CarService{
@@ -25,6 +24,14 @@ public class CarService{
 
     public List<Car> findAllCars() {
         return (List<Car>) carRepository.findAll();
+    }
+
+    public String deleteCarById(Long id){
+        if (findByCarId(id) != null){
+            carRepository.deleteById(id);
+            return "Car with the id: "+id+" has been deleted.";
+        }
+        return "No such car with the id: "+id+" is found";
     }
 
 

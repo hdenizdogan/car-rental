@@ -1,14 +1,11 @@
 package com.rentacar.carrental.controller;
 
 import com.rentacar.carrental.model.Car;
-import com.rentacar.carrental.model.Client;
 import com.rentacar.carrental.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/car")
@@ -30,5 +27,10 @@ public class CarController {
     @GetMapping("/show/all")
     public List<Car> showAllCars(){
         return carService.findAllCars();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteCar(@PathVariable("id")Long id){
+        return carService.deleteCarById(id);
     }
 }
