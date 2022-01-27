@@ -1,25 +1,21 @@
 package com.rentacar.carrental.services;
 
+
 import com.rentacar.carrental.model.Client;
 import com.rentacar.carrental.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ClientService {//implements UserDetailsManager {
+public class ClientService {
 
     @Autowired
     ClientRepository clientRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
 
     public Client saveClient(Client client) {
-        client.setPassword(passwordEncoder.encode(client.getPassword()));
         return clientRepository.save(client);
     }
 
@@ -39,7 +35,7 @@ public class ClientService {//implements UserDetailsManager {
 
 
     public List<Client> findAllClients() {
-        return (List<Client>) clientRepository.findAll();
+        return clientRepository.findAll();
     }
 
 

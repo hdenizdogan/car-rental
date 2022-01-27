@@ -6,16 +6,14 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Setter
 @Getter
-@Entity
-@Table(name= "users")
+@MappedSuperclass
 public class Person extends BaseEntity {
 
     @Column(name = "first_name")
